@@ -1,0 +1,5 @@
+<view class='container'>
+  <image class='userinfo' src='/images/info.jpg'></image>
+  <text class='username'>hello,筱</text>
+  <view class='motto' bindtap='goto'><text>开启小程序之旅</text></view>
+</view>

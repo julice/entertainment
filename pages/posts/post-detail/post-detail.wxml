@@ -1,0 +1,23 @@
+<view class="container">
+  <image src='{{postdetail.headImgSrc}}' class='detail_pic'></image>
+  <image src='/images/music/music-start.png' class='music'></image>
+  <view class='author_info'>
+    <image src='{{postdetail.avatar}}' class='author_header'></image>
+    <text class='author_name'>{{postdetail.author}}</text>
+    <text>发表于</text>
+    <text>{{postdetail.dateTime}}</text>
+  </view>
+  <view class='title'>
+    <text>{{postdetail.title}}</text>
+  </view>
+  <view class='sharebox'>
+    <view class='shareicon'>
+      <image class='chat' catchtap='collectiontap' src='/images/icon/collection-anti.png'></image>
+      <image class='share' catchtap='sharetap' src='/images/icon/share.png'></image>
+    </view>
+    <view class='detail_border'></view>
+  </view>
+  <view class='detail_text'>
+    <text>{{postdetail.detail}}</text>
+  </view>
+</view>
