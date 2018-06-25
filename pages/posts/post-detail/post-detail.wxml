@@ -1,6 +1,7 @@
 <view class="container">
-  <image src='{{postdetail.headImgSrc}}' class='detail_pic'></image>
-  <image src='/images/music/music-start.png' class='music'></image>
+  <image src='{{isplaying?postdetail.music.coverImg:postdetail.headImgSrc}}' class='detail_pic'></image>
+  <!-- <image catchtap='onmusictap' src='{{musicsrc}}' class='music'></image> -->
+  <image catchtap='onmusictap' src="{{isplaying?'/images/music/music-stop.png':'/images/music/music-start.png'}}" class='music'></image>
   <view class='author_info'>
     <image src='{{postdetail.avatar}}' class='author_header'></image>
     <text class='author_name'>{{postdetail.author}}</text>
@@ -12,7 +13,8 @@
   </view>
   <view class='sharebox'>
     <view class='shareicon'>
-      <image class='chat' catchtap='collectiontap' src='/images/icon/collection-anti.png'></image>
+      <image wx:if="{{collected}}" class='chat' catchtap='collectiontap' src='/images/icon/collection.png'></image>
+      <image wx:else class='chat' catchtap="collectiontap" src='/images/icon/collection-anti.png'></image>
       <image class='share' catchtap='sharetap' src='/images/icon/share.png'></image>
     </view>
     <view class='detail_border'></view>
