@@ -1,5 +1,5 @@
 var postsdataAll = require('../../../data/post-data.js')
-var app = getApp()
+var app = getApp();
 Page({
 
   /**
@@ -8,14 +8,14 @@ Page({
   data: {
     postdetail:'',
     isplaying:false,
-    musicsrc:'/images/music/music-start.png'
+    musicsrc:'/images/music/music-start.png',
+    reading:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var globaldata = app.globalData;
     var postid = options.id
     this.data.postid = postid
     var postsdata = postsdataAll.postcontent[postid]
@@ -41,34 +41,57 @@ Page({
       postscollected[postid]=false
       wx.setStorageSync('posts_collected', postscollected)
     }
-    if (app.globalData.g_isplaying && app.globalData.g_currentpostid===postid){
+    if (app.globalData.g_isplaying && app.globalData.g_postid===postid){
       this.setData({
-        isplaying: true
+        isplaying:true
       })
     }
-
     this.setMusic()
   
 
-  },
+    
 
+
+  },
   setMusic:function(){
-    var that = this
-    wx.onBackgroundAudioPlay(function () {
+    var that = this;
+    wx.onBackgroundAudioPlay(function (event) {
       that.setData({
         isplaying: true
       })
       app.globalData.g_isplaying=true
-      app.globalData.g_currentpostid = that.data.postid
+      app.globalData.g_postid = that.data.postid
     })
-    wx.onBackgroundAudioPause(function () {
+    wx.onBackgroundAudioPause(function (event) {
       that.setData({
         isplaying: false
       })
       app.globalData.g_isplaying=false
-      app.globalData.g_currentpostid = null
+      app.globalData.g_postid= null
     })
   },
+
+  onmusictap:function(event){
+    var musicplaying = this.data.isplaying;
+    var currentpostid = this.data.postid
+    musicplaying = !musicplaying;
+    if(musicplaying){
+      wx.playBackgroundAudio({
+        dataUrl: this.data.postdetail.music.url,
+        title: this.data.postdetail.music.title,
+        coverImgUrl: this.data.postdetail.music.coverImg
+      })
+    }
+    else{
+      wx.pauseBackgroundAudio()
+    }
+    this.setData({
+      isplaying: musicplaying
+    })
+    
+  },
+
+ 
 
   // collectiontap:function(event){
   //   var postscollected = wx.getStorageSync('posts_collected');
@@ -141,29 +164,7 @@ Page({
       complete: function (res) { },
     })
   },
-  onmusictap:function(){
-    var postsdata = postsdataAll.postcontent[this.data.postid]
-    var isplay = this.data.isplaying;
-    if(isplay){
-      wx.pauseBackgroundAudio()
-      this.setData({
-        isplaying:false
-      })
-    }
-    else {
-      this.setData({
-        isplaying: true
-      })
-      wx.playBackgroundAudio({
-        dataUrl: postsdata.music.url,
-        title: postsdata.music.title,
-        coverImgUrl: postsdata.music.coverImg,
-        success: function () {
-          console.log("ok")
-        }
-      })
-    }
-  },
+
 
 
   sharetap:function(){

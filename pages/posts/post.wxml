@@ -1,9 +1,9 @@
 <!--pages/posts/post.wxml-->
 <import src="post-item/post-item-template.wxml" />
 <view>
-  <swiper indicator-dots="{{indicatorDots}}" duration="{{duration}}" circular="{{circular}}" autoplay= "{{autoplay}}" interval="{{interval}}" vertical="{{vertical}}">
-    <swiper-item><image src='/images/post/xiaolong.jpg'></image></swiper-item>
-    <swiper-item><image src='/images/post/vr.png'></image></swiper-item>
+  <swiper indicator-dots="{{indicatorDots}}" catchtap = "gotoswiper" duration="{{duration}}" circular="{{circular}}" autoplay= "{{autoplay}}" interval="{{interval}}" vertical="{{vertical}}">
+    <swiper-item><image bindtap='gotoswiper' src='/images/post/xiaolong.jpg' data='3' data-postid="3"></image></swiper-item>
+    <swiper-item><image src='/images/post/vr.png' data='4' data-postid="4"></image></swiper-item>
   </swiper>
 
   <block wx:for="{{postcontent}}" wx:for-index="idx">
