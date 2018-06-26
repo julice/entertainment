@@ -1,0 +1,8 @@
+<import src="../stars/stars-template.wxml"/>
+<template name="movieTemplate">
+<view>
+  <image src='/images/movie/p494268647.jpg'></image>
+  <text>侏罗纪世界2</text>
+  <template is="starsTemplate"></template>
+</view>
+</template>
