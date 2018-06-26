@@ -1,4 +1,5 @@
 var postsdataAll = require('../../../data/post-data.js')
+var app = getApp()
 Page({
 
   /**
@@ -14,6 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var globaldata = app.globalData;
     var postid = options.id
     this.data.postid = postid
     var postsdata = postsdataAll.postcontent[postid]
@@ -39,9 +41,35 @@ Page({
       postscollected[postid]=false
       wx.setStorageSync('posts_collected', postscollected)
     }
+    if (app.globalData.g_isplaying && app.globalData.g_currentpostid===postid){
+      this.setData({
+        isplaying: true
+      })
+    }
+
+    this.setMusic()
   
 
   },
+
+  setMusic:function(){
+    var that = this
+    wx.onBackgroundAudioPlay(function () {
+      that.setData({
+        isplaying: true
+      })
+      app.globalData.g_isplaying=true
+      app.globalData.g_currentpostid = that.data.postid
+    })
+    wx.onBackgroundAudioPause(function () {
+      that.setData({
+        isplaying: false
+      })
+      app.globalData.g_isplaying=false
+      app.globalData.g_currentpostid = null
+    })
+  },
+
   // collectiontap:function(event){
   //   var postscollected = wx.getStorageSync('posts_collected');
   //   var postcollected = postscollected[this.data.postid]
@@ -90,7 +118,6 @@ Page({
       success:function(res){
         
         if(res.confirm){
-          console.log("res")
           wx.setStorageSync('posts_collected', postscollected)
           that.setData({
             collected: postcollected
@@ -105,7 +132,6 @@ Page({
       itemList: itemlist,
       itemColor: '#405f80',
       success: function (res) {
-        console.log(res.tapIndex)
         wx.showModal({
           title: '用户分享',
           content: '用户分享到' + itemlist[res.tapIndex],
@@ -118,7 +144,6 @@ Page({
   onmusictap:function(){
     var postsdata = postsdataAll.postcontent[this.data.postid]
     var isplay = this.data.isplaying;
-    console.log(postsdata)
     if(isplay){
       wx.pauseBackgroundAudio()
       this.setData({
