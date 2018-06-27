@@ -1,3 +1,0 @@
-.userinfo{width: 200rpx;height: 200rpx;margin-top:200rpx;}
-.username{font-size: 32rpx;font-weight: bold;margin-top: 120rpx;}
-.motto{font-size: 24rpx;font-weight: bold;border: 1px solid #405f80;width: 200rpx;height: 80rpx;line-height: 80rpx;text-align: center;color: #405f80;border-radius: 5px;margin-top: 120rpx;}
